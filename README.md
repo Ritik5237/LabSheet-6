@@ -21,17 +21,17 @@ class BinarySearchTree {
 public:
     TreeNode* root;
 
-    BinarySearchTree() : root(nullptr) {}
+BinarySearchTree() : root(nullptr) {}
 
-    // Insert function
-    TreeNode* insert(TreeNode* node, int value) {
+   
+TreeNode* insert(TreeNode* node, int value) { // Insert function
         if (!node) return new TreeNode(value);
         if (value < node->data) node->left = insert(node->left, value);
         else node->right = insert(node->right, value);
         return node;
     }
 
-    // In-order traversal
+ // In-order traversal
     void inOrder(TreeNode* node) {
         if (!node) return;
         inOrder(node->left);
@@ -45,18 +45,18 @@ class AVLTree {
 public:
     TreeNode* root;
 
-    AVLTree() : root(nullptr) {}
+ AVLTree() : root(nullptr) {}
 
-    int height(TreeNode* node) {
+int height(TreeNode* node) {
         if (!node) return 0;
         return 1 + max(height(node->left), height(node->right));
     }
 
-    int balanceFactor(TreeNode* node) {
+int balanceFactor(TreeNode* node) {
         return node ? height(node->left) - height(node->right) : 0;
     }
 
-    // Right rotation
+// Right rotation
     TreeNode* rotateRight(TreeNode* y) {
         TreeNode* x = y->left;
         TreeNode* T = x->right;
@@ -65,7 +65,7 @@ public:
         return x;
     }
 
-    // Left rotation
+// Left rotation
     TreeNode* rotateLeft(TreeNode* x) {
         TreeNode* y = x->right;
         TreeNode* T = y->left;
@@ -74,16 +74,16 @@ public:
         return y;
     }
 
-    // Insert with balancing
+// Insert with balancing
     TreeNode* insert(TreeNode* node, int value) {
         if (!node) return new TreeNode(value);
         if (value < node->data) node->left = insert(node->left, value);
         else if (value > node->data) node->right = insert(node->right, value);
         else return node;
 
-        int balance = balanceFactor(node);
+int balance = balanceFactor(node);
 
-        // Balancing cases
+// Balancing cases
         if (balance > 1 && value < node->left->data) return rotateRight(node);  // Left Left Case
         if (balance < -1 && value > node->right->data) return rotateLeft(node); // Right Right Case
         if (balance > 1 && value > node->left->data) {                          // Left Right Case
